@@ -31,18 +31,45 @@ namespace Jarmukolcsonzo.API.Controllers
             string? sortkey = null,
             bool ascending = true)
         {
-            var query = _context.jarmuvek.Include(x => x.tipus).AsQueryable();
+            var query = _context.jarmuvek.Include(x => x.tipus).OrderBy(x => x.rendszam).AsQueryable();
 
             //Összes elem számolása
             int totalItems = await query.CountAsync();
 
             //Keresés
-            if (string.IsNullOrWhiteSpace(searchKey))
+            if (!string.IsNullOrWhiteSpace(searchKey))
             { 
                 searchKey = searchKey.ToLower();
                 int.TryParse(searchKey, out int dij);
                 DateTime.TryParse(searchKey, out DateTime datum);
+                query = query.Where(x =>
+                    x.rendszam.ToLower().Contains(searchKey) ||
+                    x.tipus.megnevezes.ToLower().Contains(searchKey) ||
+                    x.dij.Equals(dij) ||
+                    x.szerviz_datum.Equals(datum));
 
+            }
+
+            //Rendezés
+            if (!string.IsNullOrWhiteSpace(sortkey))
+            {
+                switch (sortkey)
+                {
+                    case "dij":
+                        query = ascending ? query.OrderBy(x => x.dij) : query.OrderByDescending(x => x.dij);
+                        break;
+                    case "szerviz_datum":
+                        query = ascending ? query.OrderBy(x => x.szerviz_datum) : query.OrderByDescending(x => x.szerviz_datum);
+                        break;
+                    case "elerheto":
+                        query = ascending ? query.OrderBy(x => x.elerheto) : query.OrderByDescending(x => x.elerheto);
+                        break;
+                    case "tipus.megnevezes":
+                        query = ascending ? query.OrderBy(x => x.tipus.megnevezes) : query.OrderByDescending(x => x.tipus.megnevezes);
+                        break;
+                    default:
+                        break;
+                }
             }
 
             //Lapozás

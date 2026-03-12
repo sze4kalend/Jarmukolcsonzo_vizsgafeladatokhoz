@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ApiClient/ApiClient.csproj" />
+  <Project Path="Jarmukolcsonzo.API/Jarmukolcsonzo.API.csproj" />
+  <Project Path="Jarmukolcsonzo.Shared/Jarmukolcsonzo.Shared.csproj" />
+  <Project Path="Jarmukolcsonzo.WPF/Jarmukolcsonzo.WPF.csproj" Id="4733b7c2-c2b8-4277-a091-c55d9e38af29" />
+</Solution>

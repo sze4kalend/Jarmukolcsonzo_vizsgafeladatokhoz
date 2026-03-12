@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="Jarmukolcsonzo.WPF.Views.JarmuvekView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Jarmukolcsonzo.WPF.Views"
+             xmlns:viewmodel ="clr-namespace:Jarmukolcsonzo.WPF.ViewModels"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=viewmodel:JarmuvekViewModel, IsDesignTimeCreatable=False}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Label HorizontalAlignment="Center" FontSize="24">Járművek</Label>
+
+        <Expander Grid.Row="2" Header="Jármű részletei" 
+                  Style="{StaticResource jkExpander}">
+            <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="Rendszám"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedItem.rendszam}" />
+
+                <Label Grid.Row="1" Grid.Column="0" Content="Díj"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedItem.dij}" />
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Elérhető"/>
+                <CheckBox Grid.Row="2" Grid.Column="1" IsChecked="{Binding SelectedItem.elerheto}"/>
+
+                <Label Grid.Row="3" Grid.Column="0" Content="Szervíz dátum"/>
+                <DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding SelectedItem.szerviz_datum}"/>
+
+                <Label Grid.Row="4" Grid.Column="0" Content="Típus"/>
+                <ComboBox Grid.Row="4" Grid.Column="1" 
+                          ItemsSource="{Binding JarmuTipusok}"
+                          DisplayMemberPath="megnevezes" SelectedValuePath="id"
+                          SelectedItem="{Binding SelectedItem.tipus}"
+                          SelectedValue="{Binding SelectedItem.tipus_id}"/>
+
+                <Button Content="Új" Grid.Row="0" Grid.Column="2"
+                        Command="{Binding NewCommand}"/>
+                <Button Content="Mentés" Grid.Row="1" Grid.Column="2"
+                        Command="{Binding SaveCommand}" CommandParameter="{Binding SelectedItem}"/>
+                <Button Content="Törlés" Grid.Row="2" Grid.Column="2"
+                        Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"/> 
+            </Grid>
+        </Expander>
+
+        <DataGrid Grid.Row="3" 
+                  ItemsSource="{Binding Jarmuvek}"
+                  SelectedItem="{Binding SelectedItem}"
+                  ColumnWidth="*" IsReadOnly="True"
+                  SelectionMode="Single" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Rendszám" Binding="{Binding rendszam}"/>
+                <DataGridTextColumn Header="Díj" Binding="{Binding dij, StringFormat=0 000}"/>
+                <DataGridCheckBoxColumn Header="Elérhető" Binding="{Binding elerheto}"/>
+                <DataGridTextColumn Header="Szervíz dátum" Binding="{Binding szerviz_datum, StringFormat=yyyy-MM-dd}"/>
+                <DataGridTextColumn Header="Típus" Binding="{Binding tipus.megnevezes}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</UserControl>

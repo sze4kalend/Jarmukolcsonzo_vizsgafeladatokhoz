@@ -1,0 +1,11 @@
+@hostname = http://localhost:5182/api
+
+GET {{hostname}}/jarmuvek/
+Accept: application/json
+
+###
+
+GET {{hostname}}/jarmuvek?page=2&itemsPerpage=2
+Accept: application/json
+
+###

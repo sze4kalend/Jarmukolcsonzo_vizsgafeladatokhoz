@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:view="clr-namespace:Jarmukolcsonzo.WPF.Views"
+                    xmlns:vm="clr-namespace:Jarmukolcsonzo.WPF.ViewModels">
+    <!-- Itt van megadva, hogy ViewModel-hez melyik nézet fog tartozni -->
+    <DataTemplate DataType="{x:Type vm:JarmuvekViewModel}">
+        <view:JarmuvekView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:UgyfelekViewModel}">
+        <view:UgyfelekView/>
+    </DataTemplate>
+</ResourceDictionary>

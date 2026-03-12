@@ -1,0 +1,41 @@
+﻿<Window x:Class="Jarmukolcsonzo.WPF.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Jarmukolcsonzo.WPF.ViewModels"
+        mc:Ignorable="d"
+        Title="Járműkölcsönző" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="MenuItem">
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="85" MinWidth="5" MaxWidth="85" />
+            <ColumnDefinition Width="2" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Menu>
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            <MenuItem Header="Járművek" 
+                      Command="{Binding ChangeContentCommand}"
+                      CommandParameter="Jarmuvek"/>
+            <MenuItem Header="Ügyfelek"
+                      Command="{Binding ChangeContentCommand}"
+                      CommandParameter="Ugyfelek"/>
+        </Menu>
+        <GridSplitter Grid.Column="1" 
+                      Width="2" Background="Black"
+                      HorizontalAlignment="Stretch"/>
+        <ContentControl Grid.Column="2" Content="{Binding SelectedViewModel}"/>
+    </Grid>
+</Window>

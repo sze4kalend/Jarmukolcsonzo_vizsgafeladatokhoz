@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace Jarmukolcsonzo.WPF.ViewModels
 {
-    public partial class JarmuvekViewModel : ObservableObject
+    public partial class JarmuvekViewModel : DataTableViewModel
     {
         private readonly IDataTableRepository<Jarmu> _jarmuRepo;
         private readonly IGenericRepository<JarmuTipus> _jarmuTipusRepo;
@@ -30,7 +30,7 @@ namespace Jarmukolcsonzo.WPF.ViewModels
         [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
         private Jarmu? selectedItem;
 
-        private async Task LoadDataAsync()
+        protected override async Task LoadDataAsync()
         {
             // ObservableCollection-nek a konstruktora tud listát fogadni, de nem egyenlő vele
             //

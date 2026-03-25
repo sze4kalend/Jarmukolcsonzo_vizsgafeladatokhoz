@@ -24,7 +24,7 @@ namespace Jarmukolcsonzo.WPF
                 .AddTransient<JarmuvekViewModel>()
                 // .AddTransient<IGenericRepository<Jarmu>, JarmuLocalRepository>()
                 // .AddTransient<IGenericRepository<JarmuTipus>, JarmuTipusLocalRepository>()
-                .AddTransient<IGenericRepository<Jarmu>, GenericApiRepository<Jarmu>>(x =>
+                .AddTransient<IDataTableRepository<Jarmu>, DataTableApiRepository<Jarmu>>(x =>
                 {
                     return new("http://localhost:5182", "api/Jarmuvek");
                 })

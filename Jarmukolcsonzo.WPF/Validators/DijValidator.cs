@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace Jarmukolcsonzo.WPF.Validators
 {
-    public class DijValidator : ValidationRule //Vizsgán validálás
+    public class DijValidator : ValidationRule //Vizsgán validálás(feltételt kell megadni)
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

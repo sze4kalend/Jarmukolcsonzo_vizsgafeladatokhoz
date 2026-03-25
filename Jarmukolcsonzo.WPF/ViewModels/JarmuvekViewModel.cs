@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Jarmukolcsonzo.Shared.DTOs;
 using Jarmukolcsonzo.Shared.Models;
 using Jarmukolcsonzo.Shared.Repositories;
 using Jarmukolcsonzo.WPF.Repositories;
@@ -9,10 +10,10 @@ namespace Jarmukolcsonzo.WPF.ViewModels
 {
     public partial class JarmuvekViewModel : ObservableObject
     {
-        private readonly IGenericRepository<Jarmu> _jarmuRepo;
+        private readonly IDataTableRepository<Jarmu> _jarmuRepo;
         private readonly IGenericRepository<JarmuTipus> _jarmuTipusRepo;
 
-        public JarmuvekViewModel(IGenericRepository<Jarmu> jarmuRepo, IGenericRepository<JarmuTipus> jarmuTipusRepo)
+        public JarmuvekViewModel(IDataTableRepository<Jarmu> jarmuRepo, IGenericRepository<JarmuTipus> jarmuTipusRepo)
         {
             _jarmuRepo = jarmuRepo;
             _jarmuTipusRepo = jarmuTipusRepo;
@@ -32,7 +33,10 @@ namespace Jarmukolcsonzo.WPF.ViewModels
         private async Task LoadDataAsync()
         {
             // ObservableCollection-nek a konstruktora tud listát fogadni, de nem egyenlő vele
-            Jarmuvek = new ObservableCollection<Jarmu>(await _jarmuRepo.GetAllAsync() ?? []);
+            //
+            TableDto<Jarmu> result = await _jarmuRepo.GetAllAsync(Page, ItemsPerPage);
+            Jarmuvek = new ObservableCollection<Jarmu>(result.Data);
+            TotalItems = result.TotalItems;
             JarmuTipusok = new(await _jarmuTipusRepo.GetAllAsync() ?? []);
         }
 

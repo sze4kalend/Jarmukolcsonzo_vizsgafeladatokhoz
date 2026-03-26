@@ -7,6 +7,28 @@ namespace Jarmukolcsonzo.WPF.ViewModels
     {
         protected abstract Task LoadDataAsync();
 
+        // Keresés
+        [ObservableProperty]
+        private string? searchKey;
+
+        // Rendezés
+        public bool Ascending { get; set; }
+
+        private string? sortKey;
+        public string? SortKey
+        {
+            get { return sortKey; }
+            set 
+            {
+                if (sortKey == value) // Ha ugyanarra az oszlopra kattint még1x
+                {
+                    Ascending = !Ascending;
+                }
+                SetProperty(ref sortKey, value);
+                LoadDataAsync();
+            }
+        }
+
         #region Lapozás
         private int PageCount;
         protected int Page = 1;

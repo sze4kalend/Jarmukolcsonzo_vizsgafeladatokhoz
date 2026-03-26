@@ -22,8 +22,11 @@ namespace Jarmukolcsonzo.WPF
                 // Transient = Hagyományos úton, konstruktor alapján készít példányt
                 // Singleton = 1en példány készül az alkalmazás élete során
                 .AddTransient<JarmuvekViewModel>()
+                .AddTransient<LoginViewModel>()
+                .AddTransient<MainViewModel>()
                 // .AddTransient<IGenericRepository<Jarmu>, JarmuLocalRepository>()
                 // .AddTransient<IGenericRepository<JarmuTipus>, JarmuTipusLocalRepository>()
+                .AddTransient<ILoginRepository, LoginLocalRepository>()
                 .AddTransient<IDataTableRepository<Jarmu>, DataTableApiRepository<Jarmu>>(x =>
                 {
                     return new("http://localhost:5182", "api/Jarmuvek");

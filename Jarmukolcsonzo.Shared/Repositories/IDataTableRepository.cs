@@ -9,9 +9,6 @@ namespace Jarmukolcsonzo.Shared.Repositories
             int itemsPerPage = 25,
             string? searchKey = null,
             string? sortKey = null,
-            bool ascending = true
-
-
-            );
+            bool ascending = true);
     }
 }

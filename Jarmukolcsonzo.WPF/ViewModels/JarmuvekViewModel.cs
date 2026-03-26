@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using Jarmukolcsonzo.Shared.DTOs;
 using Jarmukolcsonzo.Shared.Models;
 using Jarmukolcsonzo.Shared.Repositories;
-using Jarmukolcsonzo.WPF.Repositories;
 using System.Collections.ObjectModel;
 
 namespace Jarmukolcsonzo.WPF.ViewModels
@@ -33,8 +32,8 @@ namespace Jarmukolcsonzo.WPF.ViewModels
         protected override async Task LoadDataAsync()
         {
             // ObservableCollection-nek a konstruktora tud listát fogadni, de nem egyenlő vele
-            //
-            TableDto<Jarmu> result = await _jarmuRepo.GetAllAsync(Page, ItemsPerPage);
+            // Jarmuvek = new ObservableCollection<Jarmu>(await _jarmuRepo.GetAllAsync() ?? []);
+            TableDto<Jarmu> result = await _jarmuRepo.GetAllAsync(Page, ItemsPerPage, SearchKey, SortKey, Ascending);
             Jarmuvek = new ObservableCollection<Jarmu>(result.Data);
             TotalItems = result.TotalItems;
             JarmuTipusok = new(await _jarmuTipusRepo.GetAllAsync() ?? []);

@@ -26,58 +26,72 @@ namespace Jarmukolcsonzo.API.Controllers
         [HttpGet]
         public async Task<ActionResult<TableDto<Jarmu>>> Getjarmuvek(
             int page = 1,
-            int itemsPerPage = 20,
+            int itemsPerPage = 25,
             string? searchKey = null,
-            string? sortkey = null,
+            string? sortKey = null,
             bool ascending = true)
         {
-            var query = _context.jarmuvek.Include(x => x.tipus).OrderBy(x => x.rendszam).AsQueryable();
+            var query = _context.jarmuvek
+                .Include(x => x.tipus)
+                .OrderBy(x => x.rendszam)
+                .AsQueryable();
 
-            //Összes elem számolása
+            // Összes elem számolása
             int totalItems = await query.CountAsync();
 
-            //Keresés
+            // Keresés
             if (!string.IsNullOrWhiteSpace(searchKey))
-            { 
+            {
                 searchKey = searchKey.ToLower();
-                int.TryParse(searchKey, out int dij);
-                DateTime.TryParse(searchKey, out DateTime datum);
+                int.TryParse(searchKey, out int dij); // szám esetén
+                DateTime.TryParse(searchKey, out DateTime datum); // dátum esetén
+
                 query = query.Where(x =>
                     x.rendszam.ToLower().Contains(searchKey) ||
                     x.tipus.megnevezes.ToLower().Contains(searchKey) ||
                     x.dij.Equals(dij) ||
                     x.szerviz_datum.Equals(datum));
 
+                totalItems = await query.CountAsync(); // Számolja újra keresés után
             }
 
-            //Rendezés
-            if (!string.IsNullOrWhiteSpace(sortkey))
+            // Rendezés
+            if (!string.IsNullOrWhiteSpace(sortKey))
             {
-                switch (sortkey)
+                switch (sortKey)
                 {
-                    case "dij":
-                        query = ascending ? query.OrderBy(x => x.dij) : query.OrderByDescending(x => x.dij);
+                    case "rendszam":
+                        query = ascending ?
+                            query.OrderBy(x => x.rendszam) : query.OrderByDescending(x => x.rendszam);
                         break;
-                    case "szerviz_datum":
-                        query = ascending ? query.OrderBy(x => x.szerviz_datum) : query.OrderByDescending(x => x.szerviz_datum);
+                    case "dij":
+                        query = ascending ? 
+                            query.OrderBy(x => x.dij) : query.OrderByDescending(x => x.dij);
                         break;
                     case "elerheto":
-                        query = ascending ? query.OrderBy(x => x.elerheto) : query.OrderByDescending(x => x.elerheto);
+                        query = ascending ?
+                            query.OrderBy(x => x.elerheto) : query.OrderByDescending(x => x.elerheto);
+                        break;
+                    case "szerviz_datum":
+                        query = ascending ?
+                            query.OrderBy(x => x.szerviz_datum) : query.OrderByDescending(x => x.szerviz_datum);
                         break;
                     case "tipus.megnevezes":
-                        query = ascending ? query.OrderBy(x => x.tipus.megnevezes) : query.OrderByDescending(x => x.tipus.megnevezes);
+                        query = ascending ?
+                            query.OrderBy(x => x.tipus.megnevezes) : query.OrderByDescending(x => x.tipus.megnevezes);
                         break;
                     default:
                         break;
                 }
             }
 
-            //Lapozás
+            // Lapozás
             if (page > 0 && itemsPerPage > 0)
-                {
-                    query = query.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
-                }
-            var data = await query.ToListAsync();   //SQL parancs lefuttatása
+            {
+                query = query.Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
+            }
+
+            var data = await query.ToListAsync(); // SQL parancs lefuttatása
             return new TableDto<Jarmu>(data, totalItems);
         }
 

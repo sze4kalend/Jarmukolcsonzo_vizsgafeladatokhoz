@@ -1,6 +1,8 @@
 ﻿using Jarmukolcsonzo.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.DirectoryServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +26,19 @@ namespace Jarmukolcsonzo.WPF.Views
         public JarmuvekView()
         {
             InitializeComponent();
+        }
+
+        private void DataGrid_Sorting(object sender, DataGridSortingEventArgs e)
+        {
+            JarmuvekViewModel? vm = DataContext as JarmuvekViewModel;
+            if (vm is not null)
+            {
+                vm.SortKey = e.Column.SortMemberPath;
+                e.Column.SortDirection = vm.Ascending ?
+                    ListSortDirection.Ascending :
+                    ListSortDirection.Descending;
+  
+            }
         }
     }
 }

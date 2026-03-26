@@ -5,7 +5,8 @@ Accept: application/json
 
 ###
 
-GET {{hostname}}/jarmuvek?page=2&itemsPerpage=20&searchKey=Lada&sortKey=szerviz_datum&ascending=false
+GET {{hostname}}/jarmuvek?page=1&itemsPerPage=20&searchKey=Lada&sortKey=szerviz_datum&ascending=false
 Accept: application/json
 
 ###
+

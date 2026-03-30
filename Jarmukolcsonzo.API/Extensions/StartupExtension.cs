@@ -1,4 +1,4 @@
-using JwtSecurity.Services;
+using Jarmukolcsonzo.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;

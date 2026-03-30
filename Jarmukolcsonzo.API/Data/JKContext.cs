@@ -1,5 +1,4 @@
-﻿using Jarmukolcsonzo.API.Models;
-using Jarmukolcsonzo.Shared.Models;
+﻿using Jarmukolcsonzo.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 using System;

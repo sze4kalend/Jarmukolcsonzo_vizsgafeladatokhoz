@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 //using Microsoft.EntityFrameworkCore;
 
-namespace Jarmukolcsonzo.API.Models;
+namespace Jarmukolcsonzo.Shared.Models;
 
 //[Index("nev", Name = "nev", IsUnique = true)]
 //[MySqlCharSet("utf8")]

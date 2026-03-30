@@ -1,5 +1,5 @@
 ﻿using Jarmukolcsonzo.API.Data;
-using Jarmukolcsonzo.API.Models;
+using Jarmukolcsonzo.Shared.Models;
 using Jarmukolcsonzo.Shared.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

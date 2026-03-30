@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 //using Microsoft.EntityFrameworkCore;
 
-namespace Jarmukolcsonzo.API.Models;
+namespace Jarmukolcsonzo.Shared.Models;
 
 //[Index("felhasznalonev", Name = "felhasznalonev", IsUnique = true)]
 //[Index("szerepkor_id", Name = "szerepkor_id")]

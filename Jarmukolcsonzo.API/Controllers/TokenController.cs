@@ -29,7 +29,13 @@ namespace Jarmukolcsonzo.API.Controllers
                 return Unauthorized("A felhasználó nincs regisztrálva");//401
             }
             //Jelszó ellenőrzése
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(login.Password);
+            //string hashedPassword = BCrypt.Net.BCrypt.HashPassword(login.Password);
+            if (BCrypt.Net.BCrypt.Verify(login.Password, dbUser.jelszo))//Hashelt érték összehasonlítása
+            {
+                //Token generálása
+                return Unauthorized ("Hibás felhasználónév vagy jelszó");
+            }
+
             return Ok();
         }
     }

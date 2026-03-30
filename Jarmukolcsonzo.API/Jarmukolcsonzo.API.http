@@ -10,3 +10,9 @@ Accept: application/json
 
 ###
 
+POST {{hostname}}/Token/Login
+Content-Type: application/json
+{
+  "Username": "admin",
+  "Password": "admin"
+}
